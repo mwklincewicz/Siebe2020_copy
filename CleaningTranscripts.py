@@ -52,7 +52,7 @@ print('%.2E' % Decimal ( len(token_list) ))
 # =============================================================================
 
 #datacleaner method 1: (clearness method)
-cleaned_tokens1 = [token.lemma for token in doc if not (token.is_stop or token.is_alpha) ]
+cleaned_tokens1 = [token.lemma for token in doc if not (token.is_stop or token.is_alpha) ] # this line defines what will be cleaned; so add token attributes if wanting to expand: https://spacy.io/api/token
 
 print ( len(cleaned_tokens1),len(token_list),'\n deleted tokens:', len(token_list)-len(cleaned_tokens1) )
 
