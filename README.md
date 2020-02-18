@@ -10,4 +10,4 @@
 | Lemmatization  | yes     |
 | slang and abbrevition  | no     |
 | noise removal  |      |
-| remove stopwordsw  |      |
+| remove stopwords  | yes     |
