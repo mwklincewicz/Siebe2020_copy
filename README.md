@@ -11,3 +11,4 @@
 | slang and abbrevition  | no     |
 | noise removal  |      |
 | remove stopwords  | yes     |
+| remove non-alphaNumeric  | yes     |
