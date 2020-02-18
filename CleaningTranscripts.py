@@ -79,7 +79,7 @@ print ( len(set(token_list)) )
 # Cleaning the tokens
 # =============================================================================
 def my_cleaner3(text):
-	return[token.lemma_ for token in nlp(text) if not (token.is_stop or token.is_alpha==False or len(token.lemma_) <3) ]
+	return[token.lemma_.lower() for token in nlp(text) if not (token.is_stop or token.is_alpha==False or len(token.lemma_) <3) ]
 cleaned_tokens1 = my_cleaner3(doc.text)
 
 # == :
