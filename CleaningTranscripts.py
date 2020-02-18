@@ -5,7 +5,7 @@
 ''' importing the transcripts    '''
 #======================================================================== #
 #function, created from raf's script such that it easily callable
-from my_FunctionsModule_ForThesis import TranscriptExtractor
+from my_FunctionsModule_ForThesis import TranscriptExtractor #@ tolga, raf; make sure that you put raf's transcript extractor script in a function .py file to import and call it here. 
 Transcripts = TranscriptExtractor()
 
 transcripts_strings=[]
@@ -17,8 +17,6 @@ for X in Transcripts:
     transcripts_strings.append(Transcript)
     # labels.append(Label)
     # videoId_list.append(VideoId)
-
-#NE: jp = 170
 
 # =============================================================================
 # Data Exploration
