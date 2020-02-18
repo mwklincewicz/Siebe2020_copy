@@ -12,6 +12,6 @@
 | noise removal  |      |
 | remove stopwords  | yes     |
 | remove non-alphaNumeric  | yes     |
-| remove phonetic language  | no     |
-| Include POS-tags  | no     |
+| remove phonetic language  | TBD     |
+| Include POS-tags  | TBD     |
 
