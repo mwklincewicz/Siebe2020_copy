@@ -5,6 +5,7 @@
 | Tables        | done?           |
 | ------------- |:-------------:|
 | Tokenization     |yes  | 
+| remove token if len<3     |yes  | 
 | (de)capitilization| yes     |
 | Stemming  | yes     |
 | Lemmatization  | yes     |
