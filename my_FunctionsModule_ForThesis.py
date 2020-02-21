@@ -80,3 +80,20 @@ def TranscriptExtractor(directory_youtubecsv, directory_transcripts):
 
     return id_cat_transcripts_emptycleaned
 
+def transcriptsLabels_storer():
+    """outputs a list of 3 lists containing the: 0:Video-ids + 1:Transcripts + 2:Labels ; I use it for the input of the Classifier pipeline"""
+    from my_FunctionsModule_ForThesis import TranscriptExtractor
+    transcripts = TranscriptExtractor()
+    transcripts_strings=[]
+    labels=[]
+    VideoId_list = [] #not necessary perse, just to keep track if necessary
+    
+    for X in transcripts:
+        Transcript, Label,VideoId = X[2], X[3], X[0]
+        transcripts_strings.append(Transcript)
+        labels.append(Label)
+        VideoId_list.append(VideoId)
+        transcriptsIDsLabels_List = list((VideoId_list,transcripts_strings,labels))
+    return transcriptsIDsLabels_List
+
+
