@@ -1,4 +1,4 @@
-# YT_ConSpiracy: data preprocessing
+# YT_ConSpiracy: data preprocessing (in CleaningTranscripts.py)
 
 #### DataCleaning
 
