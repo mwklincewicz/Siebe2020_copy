@@ -97,3 +97,49 @@ def transcriptsLabels_storer():
     return transcriptsIDsLabels_List
 
 
+def Binarizer_xRemover(labels,transcripts,numeric=False):
+    """# for If you want to Binerize AND delete the x's :"""
+    I = 0
+    DELETED = 0
+    if numeric == False:
+	    for X in labels:
+	        if X =='1' or X =='2':
+	            labels[I]='False'
+	        elif X =='3':
+	            labels[I]='True'
+	        elif X == 'X'.lower():
+	            DELETED +=1
+	    #        print(VideoId_list[I])
+	            print('this transcript will be deleted, together with its label: \n ' ,transcripts[I][:100],'\n\n')
+	            transcripts.pop(I)[:100]
+	            labels.pop(I)
+	            I-=1 # because 181 gets removed, 182 becomes 181 while I will be 182 and old 182 is skipped
+	        I += 1
+    while labels.count('False') + labels.count('True') != len(labels):
+        for Y in labels:
+            if Y not in (['False', 'True']):
+                Binarizer_xRemover(labels,transcripts)
+
+    if numeric == True:
+	    i=0
+	    for x in labels:
+	        if x =='False':
+	            labels[i]=0
+	            i+=1
+	        else:    
+	            labels[i]=1
+	            i+=1
+
+
+def TranscriptsLabels_preProcessed():
+    """outputs 2 variables: the transcripts and labels extracted, cleaned and binarized; make sure you store in 2 variables"""
+    from my_FunctionsModule_ForThesis import TranscriptsLabels_storer
+    YoutubeData = TranscriptsLabels_storer()
+    
+    transcripts= YoutubeData[1]
+    labels = YoutubeData[2]
+    
+    from my_FunctionsModule_ForThesis import Binarizer_xRemover
+    Binarizer_xRemover(labels,transcripts,numeric=True)
+    
+    return transcripts, labels
