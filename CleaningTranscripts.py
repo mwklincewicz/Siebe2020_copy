@@ -94,17 +94,3 @@ cleaned_tokens1 = my_cleaner3(doc.text)
 cleaned_tokens1[:100]
 print ('nr of tokens in original uncleaned corpus:', len(token_list) , '\n wat is left after cleaning: ', len(cleaned_tokens1) , '\n tokens that are deleted:',len(token_list)-len(cleaned_tokens1))
 # printing some actual tokens that are left after cleaning:
-
-
-# =============================================================================
-# Frequency Dict
-# =============================================================================
-from collections import Counter
-cleaned_tokens1_fd = Counter(cleaned_tokens1).most_common()
-print( len(cleaned_tokens1_fd) )
-
-#NE: Exporting the frequency dict to txt (for quick navigaton to particular wordTypes with notepad ++ search)
-import json
-exDict = {'exDict': cleaned_tokens1_fd}
-with open('frequencyDict.txt', 'w') as file:
-     file.writelines(json.dumps(cleaned_tokens1_fd)) # use `json.loads` to do the reverse
