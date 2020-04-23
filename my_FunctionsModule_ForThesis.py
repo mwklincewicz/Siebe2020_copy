@@ -1,3 +1,79 @@
+def TranscriptsLabels_preProcessed():
+    """outputs 2 variables: the transcripts and labels extracted, cleaned and binarized; make sure you store in 2 variables"""
+    from my_FunctionsModule_ForThesis import TranscriptsLabels_storer
+    YoutubeData = TranscriptsLabels_storer()
+    
+    transcripts= YoutubeData[1]
+    labels = YoutubeData[2]
+    
+    from my_FunctionsModule_ForThesis import Binarizer_xRemover
+    Binarizer_xRemover(labels,transcripts,numeric=True)
+    
+    return transcripts, labels
+
+
+def TranscriptsLabels_storer():
+    """outputs a list of 3 lists containing the: Video ids + Transcripts+ labels ; I use it for the input of the Classifier pipeline"""
+    from my_FunctionsModule_ForThesis import TranscriptExtractor
+    transcripts = TranscriptExtractor()
+    Transcripts_strings=[]
+    labels=[]
+    VideoId_list = [] #not necessary perse, just to keep track if necessary
+    
+    for X in transcripts:
+        Transcript, Label,VideoId = X[2], X[3], X[0]
+        Transcripts_strings.append(Transcript)
+        labels.append(Label)
+        VideoId_list.append(VideoId)
+        transcriptsIDsLabels_List = list((VideoId_list,Transcripts_strings,labels))
+    return transcriptsIDsLabels_List
+
+
+def LabelXcleaner(labels,transcripts):
+    DELETED = 0
+    I =0
+    for X in labels:
+        if X == 'X'.lower():
+            DELETED +=1
+    #        print(VideoId_list[I])
+            print('this transcript will be deleted, together with its label: \n ' ,transcripts[I][:100],'\n\n')
+            transcripts.pop(I)[:100]
+            labels.pop(I)
+            I-=1
+            print('deleted:' , DELETED)
+#        else:
+#            labels[I] = int(X) # the predictfunctions of some algos predict strings only, then you have issues with confusion matrix
+        I+=1
+
+
+def LabelxTranscriptIsolator(Transcripts,Labels,labelNumber):
+    """ creates a list of all the transcripts that have the specified label, thus are conspiratorial; perhaps handy for making a corpus or vocabulary IF OTHER LABEL, CONFIGURE 'J==0/1/2'"""
+    indices = []
+    for i,j in enumerate(Labels):
+        if j==labelNumber:
+            indices.append(i)
+    #extract elements from a list using indices
+    Transcripts = [Transcripts[i] for i in indices]
+    return Transcripts
+
+
+def ner_ents__List():
+    """ NER, all the NERS or ents_ from spacy in a list:"""
+    listOfSpacyEnts = ['PERSON', 'NORP' 'FAC', 'ORG', 'GPE', 'LOC', 'PRODUCT', 'EVENT', 'WORK_OF_ART', 'LAW', 'LANGUAGE', 'DATE', 'TIME', 'PERCENT', 'MONEY', 'QUANTITY', 'ORDINAL', 'CARDINAL']
+    return listOfSpacyEnts
+
+
+def CleanTokenizer(doc): #SYNC WITH 'cleaning youtube transcripts..."
+    # a list of LabelxTranscriptIsolatortokens I want to filter out, next to the predefined stopword list
+    myFilterOutList = ['music']
+# No list comprehension, for comprehension, lol. 
+    cleanedTokens = []
+    for token in doc: # can i mike this nlp(doc), or text
+        if not (token.is_stop or token.is_alpha==False or len(token.lemma_) <3 or token.lemma_.lower() in myFilterOutList ):
+            cleanedTokens.append(token.lemma_.lower())
+    return cleanedTokens
+
+
 def TranscriptExtractor(directory_youtubecsv, directory_transcripts):
     "This Function extracts a list from the dataset with the following string contents: [Video_ID, Video_Category, Video_Transcript, Video_Rating]"
 
@@ -129,17 +205,3 @@ def Binarizer_xRemover(labels,transcripts,numeric=False):
 	        else:    
 	            labels[i]=1
 	            i+=1
-
-
-def TranscriptsLabels_preProcessed():
-    """outputs 2 variables: the transcripts and labels extracted, cleaned and binarized; make sure you store in 2 variables"""
-    from my_FunctionsModule_ForThesis import TranscriptsLabels_storer
-    YoutubeData = TranscriptsLabels_storer()
-    
-    transcripts= YoutubeData[1]
-    labels = YoutubeData[2]
-    
-    from my_FunctionsModule_ForThesis import Binarizer_xRemover
-    Binarizer_xRemover(labels,transcripts,numeric=True)
-    
-    return transcripts, labels
