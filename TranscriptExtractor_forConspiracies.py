@@ -1,9 +1,16 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon May  4 11:12:28 2020
+
+@author: Siebe Albers
+"""
+
 
 #======================================================================== #
 'load a df with video ids (which will be used for the youtube api to download the transcripts: and later on for extracting the labels                          '
 
 
-with open("C:\\Users\\Sa\\Documents\\listYoutubeids_thatRafTolgaSiebeWatched.txt",encoding="utf-8") as f:
+with open('IdList_selfWachtedYoutubeVids.txt',encoding="utf-8") as f:
     idList = f.readlines() #txt file with the ids:
 
 #alternatively:
@@ -21,7 +28,13 @@ Transcripts_w_timestamps = Transcripts_w_timestamps[0]
 
 print('time it took:', time.time() - STARTTIME)
 
+print( 'len trans', len(Transcripts_w_timestamps)) # see how many could be downloaded
 
+# =============================================================================
+# transcripts that were unable to be extraced:
+# =============================================================================
+ids_thatcouldnotbedownloaded = list( set_originalId - set_downloadedtransIds )
+print( 'len downloaded trans:',ids_thatcouldnotbedownloaded)
 
 # =============================================================================
 # # creating a dict with transcripts, ψ Writing to string files to (re)create the transcripts
@@ -40,6 +53,16 @@ for I in IDLIST:
     trans_dic_fromApi[I] = TRANS
 
 
+#======================================================================== #
+' Exporting to disk         '
+#======================================================================== #
+import json
+with open('ourWatchedYoutubevidsTranscriptsψkeys.json', 'w') as fp:
+    json.dump(trans_dic_fromApi, fp)
+
+
+
+
 
 ## =============================================================================
 ## #creating 1 dictionary for storing all meta Data of the transcripts
@@ -47,7 +70,7 @@ for I in IDLIST:
 #a_meta_dict_transFromApi = { 'transcripts': {I: trans_dic_fromApi[I] for I in trans_dic_fromApi.keys() }, #look at the weird syntac I: ...[i] for i 
 #         'lengths': {I: len(trans_dic_fromApi[I].split()) for I in trans_dic_fromApi.keys() },
 #         'labels': {I :OldTransDF_idsasKeys['label'][I] for I in trans_dic_fromApi.keys() } #extract labels from old df
-#                         }
+                         }
 #
 ##check length of the transcript with same Id to see if it complies with lenlist with same id:
 #len ( a_meta_dict_transFromApi['transcripts']['-5RCmu-HuTg'].split() )
